@@ -10,9 +10,9 @@ LOGGER = logging.getLogger(__name__)
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        signature = self.get_query_argument('signature')
-        timestamp = self.get_query_argument('timestamp')
-        nonce = self.get_query_argument('nonce')
+        signature = self.get_query_argument('signature', default=None)
+        timestamp = self.get_query_argument('timestamp', default=None)
+        nonce = self.get_query_argument('nonce', default=None)
         echo_str = self.get_query_argument('echostr')
         LOGGER.info(timestamp)
         LOGGER.info(nonce)
