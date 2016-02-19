@@ -4,6 +4,10 @@ import logging
 import tornado.ioloop
 import tornado.web
 
+from utility import parse_xml
+from queue import get_queue
+from download import download_media
+
 
 LOGGER = logging.getLogger(__name__)
 
@@ -14,10 +18,14 @@ class MainHandler(tornado.web.RequestHandler):
         timestamp = self.get_query_argument('timestamp', default=None)
         nonce = self.get_query_argument('nonce', default=None)
         echo_str = self.get_query_argument('echostr')
-        LOGGER.info(timestamp)
-        LOGGER.info(nonce)
-        LOGGER.info(nonce)
         self.write(echo_str)
+
+    def post(self, *args, **kwargs):
+        data = parse_xml(self.request.body)
+        if data.MsgType != 'voice':
+            return
+        q = get_queue()
+        q.enqueue(download_media, media_id=data.MediaId, format=data.Format)
 
 
 def make_app():
