@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 import logging
+
+import time
 import tornado.ioloop
 import tornado.web
 
@@ -26,6 +28,17 @@ class MainHandler(tornado.web.RequestHandler):
             return
         q = get_queue()
         q.enqueue(download_media, media_id=data.MediaId, media_format=data.Format)
+        msg = '''
+        <xml>
+        <ToUserName><![CDATA[{}]]></ToUserName>
+        <FromUserName><![CDATA[{}]]></FromUserName>
+        <CreateTime>{}</CreateTime>
+        <MsgType><![CDATA[text]]></MsgType>
+        <Content><![CDATA[will play]]></Content>
+        </xml>
+        '''.format(data.FromUserName, data.ToUserName, int(time.time()))
+        self.set_header('Content-Type', 'application/xml')
+        self.write(msg)
 
 
 def make_app():
