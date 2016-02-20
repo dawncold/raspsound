@@ -4,4 +4,4 @@ from subprocess import call
 
 
 def play_media(file_path):
-    call('omxplayer', file_path)
+    call(['omxplayer', file_path])
