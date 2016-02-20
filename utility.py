@@ -14,7 +14,7 @@ ACCESS_TOKEN_URL_TPL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=clien
 
 
 def get_app_config():
-    with open('~/.config') as f:
+    with open('~/.raspsound') as f:
         lines = f.readlines()
     return DictObject(appid=lines[0].strip(), app_secret=lines[1].strip())
 
