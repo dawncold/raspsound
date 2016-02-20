@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals, print_function, division
 import logging
-import lxml.objectify
+import xml.etree.ElementTree
 import requests
 
 from collection import DictObject, objectify
@@ -21,8 +21,8 @@ def get_app_config():
 
 def parse_xml(xmltext):
     arguments = DictObject()
-    root = lxml.objectify.fromstring(xmltext)
-    for e in root.iterchildren():
+    root = xml.etree.ElementTree.fromstring(xmltext)
+    for e in root:
         if e.text:
             arguments[e.tag] = e.text
     return arguments
