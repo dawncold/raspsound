@@ -22,7 +22,7 @@ def download_media(media_id, media_format):
     except Exception:
         LOGGER.info('got exception when download media: %(media_id)s', {'media_id': media_id})
     else:
-        file_path = 'media/{}-{}.{}'.format(datetime.now().strftime('%Y%m%d%H%M%S'), media_id, media_format)
+        file_path = '/home/pi/raspsound/media/{}-{}.{}'.format(datetime.now().strftime('%Y%m%d%H%M%S'), media_id, media_format)
         with open(file_path, mode='wb+') as f:
             f.write(response.content)
         q = get_queue()
