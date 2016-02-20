@@ -8,7 +8,7 @@ from utility import get_access_token
 
 LOGGER = logging.getLogger(__name__)
 
-MEDIA_URL_TPL = 'http://file.api.weixin.qq.com/cgi-bin/media/get?access_token={}&media_id={}'
+MEDIA_URL_TPL = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token={}&media_id={}'
 
 
 def download_media(media_id, media_format):
