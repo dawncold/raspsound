@@ -25,7 +25,7 @@ class MainHandler(tornado.web.RequestHandler):
         if data.MsgType != 'voice':
             return
         q = get_queue()
-        q.enqueue(download_media, media_id=data.MediaId, format=data.Format)
+        q.enqueue(download_media, media_id=data.MediaId, media_format=data.Format)
 
 
 def make_app():
