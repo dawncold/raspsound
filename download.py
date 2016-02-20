@@ -5,6 +5,8 @@ from datetime import datetime
 import requests
 
 from utility import get_access_token
+from queue import get_queue
+from play import play_media
 
 LOGGER = logging.getLogger(__name__)
 
@@ -20,5 +22,8 @@ def download_media(media_id, media_format):
     except Exception:
         LOGGER.info('got exception when download media: %(media_id)s', {'media_id': media_id})
     else:
-        with open('media/{}-{}.{}'.format(datetime.now().strftime('%Y%m%d%H%M%S'), media_id, media_format), mode='wb+') as f:
+        file_path = 'media/{}-{}.{}'.format(datetime.now().strftime('%Y%m%d%H%M%S'), media_id, media_format)
+        with open(file_path, mode='wb+') as f:
             f.write(response.content)
+        q = get_queue()
+        q.enqueue(play_media, file_path=file_path)
